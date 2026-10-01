@@ -1,0 +1,157 @@
+/******************************************************************
+ * PROJECT      : Paradise Member Card
+ * MODULE       : Generate Member Card (Frontend - GitHub, Repo Terpisah)
+ * FILE         : css/style.css
+ * VERSION      : v1.0.0
+ * AUTHOR       : Jimmy
+ * CREATED      : 2026-09-25
+ * LAST UPDATE  : 2026-09-25
+ *
+ * DESCRIPTION
+ * ----------------------------------------------------------------
+ * Styling halaman Generate Member Card. Warna utama disamakan
+ * dengan repo pendaftaran (Paradise Member) supaya identitas
+ * visual tetap konsisten walau project-nya terpisah.
+ ******************************************************************/
+
+/******************************************************************
+ * VERSION HISTORY
+ * ----------------------------------------------------------------
+ *
+ * v1.0.0
+ * - Initial Release.
+ *
+ ******************************************************************/
+
+/******************************************************************
+ * CONSTANTS (WARNA)
+ * ----------------------------------------------------------------
+ * Warna utama aplikasi, disamakan dengan repo pendaftaran.
+ ******************************************************************/
+:root {
+  --color-primary: #1F4E5F;
+  --color-primary-dark: #163945;
+  --color-background: #F4F6F7;
+  --color-card: #FFFFFF;
+  --color-text: #222222;
+  --color-muted: #6B6B6B;
+  --color-error: #C0392B;
+  --color-success: #1E8449;
+  --color-border: #DADEE0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.panel {
+  width: 100%;
+  max-width: 640px;
+  background: var(--color-card);
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.brand {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.subtitle {
+  margin: 0 0 20px 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #FCFCFC;
+}
+
+.status-message {
+  min-height: 18px;
+  font-size: 13px;
+  margin: 10px 0 0 0;
+}
+
+.status-message.error {
+  color: var(--color-error);
+}
+
+.status-message.success {
+  color: var(--color-success);
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: var(--color-muted);
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background: var(--color-primary-dark);
+}
+
+.hidden {
+  display: none;
+}
+
+.canvas-wrapper {
+  margin-top: 20px;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #EFEFEF;
+}
+
+#memberCardCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}

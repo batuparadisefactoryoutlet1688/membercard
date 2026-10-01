@@ -1,0 +1,89 @@
+<!--
+/******************************************************************
+ * PROJECT      : Paradise Member Card
+ * MODULE       : Generate Member Card (Frontend - GitHub, Repo Terpisah)
+ * FILE         : index.html
+ * VERSION      : v1.0.0
+ * AUTHOR       : Jimmy
+ * CREATED      : 2026-09-25
+ * LAST UPDATE  : 2026-09-25
+ *
+ * DESCRIPTION
+ * ----------------------------------------------------------------
+ * Halaman untuk admin/kasir: cari member (nama atau Member ID),
+ * generate kartu member dengan menggambar Nama, Valid From, Valid
+ * Until, dan Member Code di atas template assets/membercard.png
+ * memakai <canvas>, lalu bisa diunduh sebagai PNG.
+ *
+ * Project ini SENGAJA dipisah dari repo pendaftaran (Paradise
+ * Member). Repo ini hanya untuk kebutuhan admin/kasir generate
+ * kartu, memanggil Apps Script Web App yang sama sebagai sumber
+ * data (database MEMBERS).
+ ******************************************************************/
+
+/******************************************************************
+ * VERSION HISTORY
+ * ----------------------------------------------------------------
+ *
+ * v1.0.0
+ * - Initial Release.
+ *
+ ******************************************************************/
+
+/******************************************************************
+ * DEPENDENCIES
+ * ----------------------------------------------------------------
+ *
+ * Required
+ * - css/style.css
+ * - js/app.js
+ * - assets/membercard.png (WAJIB ditambahkan manual oleh admin)
+ *
+ ******************************************************************/
+-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generate Member Card — Paradise Member</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page">
+    <div class="panel">
+
+      <h1 class="brand">GENERATE MEMBER CARD</h1>
+      <p class="subtitle">Cari member berdasarkan nama atau Member ID</p>
+
+      <!-- ============================================================
+           SECTION: PENCARIAN MEMBER
+      ============================================================= -->
+      <label for="memberSearchInput">Cari Member</label>
+      <input
+        type="text"
+        id="memberSearchInput"
+        list="memberDataList"
+        placeholder="Ketik nama atau kode member..."
+        autocomplete="off">
+      <datalist id="memberDataList"></datalist>
+
+      <p id="statusMessage" class="status-message"></p>
+
+      <button type="button" id="generateButton" disabled>GENERATE KARTU</button>
+
+      <!-- ============================================================
+           SECTION: HASIL KARTU (CANVAS)
+      ============================================================= -->
+      <div class="canvas-wrapper">
+        <canvas id="memberCardCanvas" width="1671" height="941"></canvas>
+      </div>
+
+      <button type="button" id="downloadButton" class="hidden">DOWNLOAD KARTU (PNG)</button>
+
+    </div>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
