@@ -3,7 +3,7 @@
  * PROJECT      : Paradise Member Card
  * MODULE       : Generate Member Card (Frontend - GitHub, Repo Terpisah)
  * FILE         : index.html
- * VERSION      : v1.0.0
+ * VERSION      : v1.1.0
  * AUTHOR       : Jimmy
  * CREATED      : 2026-09-25
  * LAST UPDATE  : 2026-09-25
@@ -27,6 +27,12 @@
  *
  * v1.0.0
  * - Initial Release.
+ *
+ * v1.1.0
+ * - Menambahkan tombol Refresh Data Member. Data member dimuat
+ *   sekali saat halaman dibuka (disimpan di memory browser), jadi
+ *   pendaftaran baru TIDAK otomatis muncul sampai tombol ini
+ *   ditekan untuk memuat ulang data dari Apps Script.
  *
  ******************************************************************/
 
@@ -54,7 +60,11 @@
     <div class="panel">
 
       <h1 class="brand">GENERATE MEMBER CARD</h1>
-      <p class="subtitle">Cari member berdasarkan nama atau Member ID</p>
+
+      <div class="header-row">
+        <p class="subtitle">Cari member berdasarkan nama atau Member ID</p>
+        <button type="button" id="refreshButton" class="button-secondary">⟳ Refresh Data Member</button>
+      </div>
 
       <!-- ============================================================
            SECTION: PENCARIAN MEMBER
