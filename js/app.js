@@ -2,7 +2,7 @@
  * PROJECT      : Paradise Member
  * MODULE       : Generate Member Card (Frontend - GitHub, Repo Terpisah)
  * FILE         : js/app.js
- * VERSION      : v1.0.0
+ * VERSION      : v1.1.0
  * AUTHOR       : Jimmy
  * CREATED      : 2026-09-25
  * LAST UPDATE  : 2026-09-25
@@ -12,8 +12,9 @@
  * Mengambil daftar member dari Apps Script API (action=getMembers),
  * menampilkannya sebagai pencarian (datalist), menggambar kartu
  * member di atas template assets/membercard.png memakai <canvas>
- * (Nama, Valid From, Valid Until, Member Code), dan menyediakan
- * tombol download hasilnya sebagai file PNG.
+ * (Nama, Valid From, Valid Until, Member Code), menyediakan tombol
+ * download hasilnya sebagai file PNG, dan tombol Refresh untuk
+ * memuat ulang data member terbaru dari spreadsheet.
  ******************************************************************/
 
 /******************************************************************
@@ -22,6 +23,13 @@
  *
  * v1.0.0
  * - Initial Release.
+ *
+ * v1.1.0
+ * - Menambahkan handleRefreshClick(), resetSelectionState(), dan
+ *   setRefreshing() untuk tombol Refresh Data Member. Data yang
+ *   sudah dimuat (variable memberList) disimpan di memory browser
+ *   saat halaman dibuka, sehingga pendaftaran baru tidak otomatis
+ *   muncul sampai tombol Refresh ditekan.
  *
  ******************************************************************/
 
@@ -95,6 +103,8 @@
   ];
 
   const DOWNLOAD_FILENAME_PREFIX = "MemberCard-";
+  const REFRESH_BUTTON_LABEL_DEFAULT = "⟳ Refresh Data Member";
+  const REFRESH_BUTTON_LABEL_LOADING = "Memuat...";
 
   /******************************************************************
    * STATE
@@ -120,6 +130,7 @@
     document.getElementById("memberSearchInput").addEventListener("input", handleSearchInput);
     document.getElementById("generateButton").addEventListener("click", handleGenerateClick);
     document.getElementById("downloadButton").addEventListener("click", handleDownloadClick);
+    document.getElementById("refreshButton").addEventListener("click", handleRefreshClick);
 
     preloadCardImage();
     loadMemberList();
@@ -142,6 +153,7 @@
    *            (action=getMembers) dan mengisi datalist pencarian.
    ******************************************************************/
   function loadMemberList() {
+    setRefreshing(true);
     showStatus("Memuat data member...", false);
 
     const requestUrl = CONFIG.API_URL + "?action=" + ACTION_GET_MEMBERS;
@@ -151,6 +163,8 @@
         return response.json();
       })
       .then(function (result) {
+        setRefreshing(false);
+
         if (!result.success) {
           showStatus(result.message, true);
           return;
@@ -161,6 +175,7 @@
         showStatus("Data member siap. Total: " + memberList.length + " member.", false);
       })
       .catch(function (error) {
+        setRefreshing(false);
         showStatus("Gagal memuat data member. Periksa koneksi atau API_URL.", true);
         console.error("[LOAD MEMBERS]", error);
       });
@@ -426,6 +441,43 @@
     const statusElement = document.getElementById("statusMessage");
     statusElement.textContent = message;
     statusElement.className = isError ? "status-message error" : "status-message success";
+  }
+
+  /******************************************************************
+   * Function : handleRefreshClick()
+   * Tujuan   : Dipicu saat tombol Refresh Data Member ditekan.
+   *            Data member yang sudah dimuat (memory browser) bisa
+   *            jadi tidak lagi mewakili data terbaru di spreadsheet
+   *            (misal ada pendaftaran baru setelah halaman dibuka),
+   *            jadi fungsi ini memuat ulang dari Apps Script dan
+   *            mengosongkan pilihan/kartu yang sedang ditampilkan.
+   ******************************************************************/
+  function handleRefreshClick() {
+    resetSelectionState();
+    loadMemberList();
+  }
+
+  /******************************************************************
+   * Function : resetSelectionState()
+   * Tujuan   : Mengosongkan kolom pencarian dan menyembunyikan
+   *            kartu/tombol download, supaya tidak ada kartu lama
+   *            yang masih tampil setelah data di-refresh.
+   ******************************************************************/
+  function resetSelectionState() {
+    document.getElementById("memberSearchInput").value = "";
+    document.getElementById("generateButton").disabled = true;
+    document.getElementById("downloadButton").classList.add("hidden");
+  }
+
+  /******************************************************************
+   * Function : setRefreshing()
+   * Tujuan   : Mengatur tampilan tombol Refresh selagi proses
+   *            pemuatan data berjalan, mencegah klik ganda.
+   ******************************************************************/
+  function setRefreshing(isRefreshing) {
+    const refreshButtonElement = document.getElementById("refreshButton");
+    refreshButtonElement.disabled = isRefreshing;
+    refreshButtonElement.textContent = isRefreshing ? REFRESH_BUTTON_LABEL_LOADING : REFRESH_BUTTON_LABEL_DEFAULT;
   }
 
 })();
