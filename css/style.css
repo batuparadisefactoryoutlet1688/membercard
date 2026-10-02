@@ -2,7 +2,7 @@
  * PROJECT      : Paradise Member Card
  * MODULE       : Generate Member Card (Frontend - GitHub, Repo Terpisah)
  * FILE         : css/style.css
- * VERSION      : v1.0.0
+ * VERSION      : v1.1.0
  * AUTHOR       : Jimmy
  * CREATED      : 2026-09-25
  * LAST UPDATE  : 2026-09-25
@@ -20,6 +20,10 @@
  *
  * v1.0.0
  * - Initial Release.
+ *
+ * v1.1.0
+ * - Menambahkan style .header-row dan .button-secondary untuk
+ *   tombol Refresh Data Member.
  *
  ******************************************************************/
 
@@ -77,10 +81,41 @@ body {
 }
 
 .subtitle {
-  margin: 0 0 20px 0;
+  margin: 0;
   color: var(--color-muted);
   font-size: 13px;
-  text-align: center;
+  text-align: left;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 20px 0;
+}
+
+.button-secondary {
+  width: auto;
+  margin-top: 0;
+  padding: 8px 12px;
+  font-size: 11px;
+  background: #FFFFFF;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.button-secondary:hover {
+  background: var(--color-background);
+}
+
+.button-secondary:disabled {
+  background: #FFFFFF;
+  color: var(--color-muted);
+  border-color: var(--color-border);
+  cursor: not-allowed;
 }
 
 label {
